@@ -1,0 +1,41 @@
+### model
+model_name_or_path: /workspace/mnt/storage/yangdecheng@supremind.com/ydc-wksp-llm3-data/train_models/qwen2_7b_sft_2
+reward_model: saves/qwen2-7b/lora/sft/qwen2_7b_rm_2
+
+### method
+stage: ppo
+do_train: true
+finetuning_type: lora
+lora_target: v_proj,q_proj,up_proj
+lora_rank: 16
+lora_dropout: 0.7
+
+### dataset
+dataset: importance_stock_eval20241122_zhuti_sft,importance_stock_eval20241122_hongguan_sft,importance_stock_history11_sft
+template: alpaca
+cutoff_len: 2048
+max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: saves/qwen2-7b/lora/sft/qwen2_7b_ppo_1
+logging_steps: 10
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-5
+num_train_epochs: 10.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+
+### generate
+max_new_tokens: 512
+top_k: 1
+top_p: 0.7
